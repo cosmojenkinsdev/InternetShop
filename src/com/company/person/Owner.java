@@ -1,20 +1,18 @@
 package com.company.person;
 
-public class Owner {
+public final class Owner {
     private final String name;
     private final String id;
 
-    public Owner(String name, String id) throws IllegalArgumentException {
+    public Owner(String name, String id) {
         if (name == null || name.isBlank()) {
             throw new IllegalArgumentException("Владелец должен иметь валидное поля имени!");
-        } else {
-            this.name = name;
         }
         if (id == null || id.isBlank()) {
             throw new IllegalArgumentException("Владелец должен иметь валидное поля id!");
-        } else {
-            this.id = id;
         }
+        this.name = name;
+        this.id = id;
     }
 
     public String getName() {
