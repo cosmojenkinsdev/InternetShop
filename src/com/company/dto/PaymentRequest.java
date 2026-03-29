@@ -1,6 +1,6 @@
-package com.company;
+package com.company.dto;
 
-import com.company.Status.PaymentCategory;
+import com.company.enums.PaymentCategory;
 
 public class PaymentRequest {
     private double money;

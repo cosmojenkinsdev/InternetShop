@@ -1,9 +1,9 @@
-package com.company.Instruments;
+package com.company.instruments;
 
-import com.company.Interfaces.Payable;
-import com.company.PaymentRequest;
-import com.company.PaymentResult;
-import com.company.Status.InstrumentStatus;
+import com.company.interfaces.Payable;
+import com.company.dto.PaymentRequest;
+import com.company.dto.PaymentResult;
+import com.company.enums.InstrumentStatus;
 
 public class CorporateCard extends Instrument implements Payable {
     public CorporateCard(String id, String nameHost, InstrumentStatus instrumentStatus, int balance) {

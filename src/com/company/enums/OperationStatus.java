@@ -1,4 +1,4 @@
-package com.company.Status;
+package com.company.enums;
 
 public enum OperationStatus {
     SUCCESS,

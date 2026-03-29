@@ -1,6 +1,6 @@
-package com.company.Instruments;
+package com.company.instruments;
 
-import com.company.Status.InstrumentStatus;
+import com.company.enums.InstrumentStatus;
 
 public abstract class Instrument {
     private String id;
