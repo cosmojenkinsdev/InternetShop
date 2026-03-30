@@ -4,15 +4,34 @@ import com.company.interfaces.Payable;
 import com.company.dto.PaymentRequest;
 import com.company.dto.PaymentResult;
 import com.company.enums.InstrumentStatus;
+import com.company.person.Owner;
 
-public class CorporateCard extends PaymentInstrument implements Payable {
-    public CorporateCard(String id, String nameHost, InstrumentStatus instrumentStatus, int balance) {
-        super(id, nameHost, instrumentStatus, balance);
+public class CorporateCard extends PaymentInstrument {
+    private final int transactionLimit;
+    private static final double COMMISSION = 0.02;
+
+    public CorporateCard(String id, Owner owner, InstrumentStatus status, int balance, int transactionLimit) {
+        super(id, owner, status, balance);
+        if (transactionLimit <= 0) {
+            throw new IllegalArgumentException("Лимит одной операции должен быть больше 0");
+        }
+        this.transactionLimit = transactionLimit;
     }
 
     @Override
-    public PaymentResult payResult(PaymentRequest request) {
+    protected String validatePayment(PaymentRequest request) {
+        if (request.getMoney() > transactionLimit){
+            return "Сумма транзакции больше лимита суммы по операциям";
+        }
+        return null;
+    }
 
-        return result;
+    @Override
+    protected double calculateCommission(PaymentRequest request) {
+        return request.getMoney() * COMMISSION;
+    }
+
+    public int getTransactionLimit() {
+        return transactionLimit;
     }
 }
