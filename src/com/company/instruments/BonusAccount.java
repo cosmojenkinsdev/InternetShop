@@ -5,11 +5,10 @@ import com.company.enums.InstrumentStatus;
 import com.company.enums.PaymentCategory;
 import com.company.person.Owner;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class BonusAccount extends PaymentInstrument {
-    private List<PaymentCategory> badCategory = new ArrayList<>();
+    private static final List<PaymentCategory> badCategories = List.of(PaymentCategory.ADS, PaymentCategory.TAXI);
 
     public BonusAccount(String id, Owner owner, InstrumentStatus status, int balance) {
         super(id, owner, status, balance);
@@ -17,11 +16,18 @@ public class BonusAccount extends PaymentInstrument {
 
     @Override
     protected String validatePayment(PaymentRequest request) {
-        return "";
+        if (badCategories.contains(request.getCategory())){
+            return "Эта категория недоступна для оплаты бонусным счетом";
+        }
+        return null;
     }
 
     @Override
     protected double calculateCommission(PaymentRequest request) {
         return 0;
+    }
+
+    public List<PaymentCategory> getBadCategories() {
+        return List.copyOf(badCategories);
     }
 }
