@@ -1,14 +1,12 @@
 package com.company.instruments;
 
-import com.company.interfaces.Payable;
 import com.company.dto.PaymentRequest;
-import com.company.dto.PaymentResult;
 import com.company.enums.InstrumentStatus;
 import com.company.person.Owner;
 
 public class CorporateCard extends PaymentInstrument {
     private final int transactionLimit;
-    private static final double COMMISSION = 0.02;
+    private static final double COMMISSION_FOR_CARD = 0.02;
 
     public CorporateCard(String id, Owner owner, InstrumentStatus status, int balance, int transactionLimit) {
         super(id, owner, status, balance);
@@ -28,7 +26,7 @@ public class CorporateCard extends PaymentInstrument {
 
     @Override
     protected double calculateCommission(PaymentRequest request) {
-        return request.getMoney() * COMMISSION;
+        return request.getMoney() * COMMISSION_FOR_CARD;
     }
 
     public int getTransactionLimit() {
