@@ -11,12 +11,14 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.company.domain.OperationJournal.addRecord;
+
 public abstract class PaymentInstrument {
     private final String id;
     private final Owner owner;
     private InstrumentStatus status;
     private double balance;
-    private final List<OperationRecord> operationRecords = new ArrayList<>();
+    //private static final List<OperationRecord> operationRecords = new ArrayList<>();
 
     public PaymentInstrument(String id, Owner owner, InstrumentStatus status, int balance) {
         if (id == null || id.isBlank()) {
@@ -56,7 +58,7 @@ public abstract class PaymentInstrument {
                     request.getCategory(),
                     OperationStatus.REJECTED,
                     message);
-            addOperationRecord(record);
+            addRecord(record);
             return result;
         }
         String validatePaymentMessage = validatePayment(request);
@@ -74,7 +76,7 @@ public abstract class PaymentInstrument {
                     request.getCategory(),
                     OperationStatus.REJECTED,
                     validatePaymentMessage);
-            addOperationRecord(record);
+            addRecord(record);
             return result;
         }
         double totalWithdrawnAmount = calculateCommission(request) + request.getMoney();
@@ -93,7 +95,7 @@ public abstract class PaymentInstrument {
                     request.getCategory(),
                     OperationStatus.REJECTED,
                     message);
-            addOperationRecord(record);
+                    addRecord(record);
             return result;
         }
         decreasedBalance(totalWithdrawnAmount);
@@ -111,7 +113,7 @@ public abstract class PaymentInstrument {
                 request.getCategory(),
                 OperationStatus.SUCCESS,
                 message);
-        addOperationRecord(record);
+        addRecord(record);
         return result;
     }
 
@@ -137,12 +139,12 @@ public abstract class PaymentInstrument {
     }
 
 
-    protected void addOperationRecord(OperationRecord record) {
+    /*protected void addOperationRecord(OperationRecord record) {
         if (record == null) {
             throw new IllegalArgumentException("Запись не должна быть null");
         }
         operationRecords.add(record);
-    }
+    }*/
 
     public String getId() {
         return id;
@@ -167,7 +169,7 @@ public abstract class PaymentInstrument {
         return balance;
     }
 
-    public List<OperationRecord> getOperationRecords() {
+    /*public static List<OperationRecord> getOperationRecords() {
         return List.copyOf(operationRecords);
-    }
+    }*/
 }
