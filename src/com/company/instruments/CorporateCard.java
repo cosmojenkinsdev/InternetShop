@@ -18,7 +18,7 @@ public class CorporateCard extends PaymentInstrument {
 
     @Override
     protected String validatePayment(PaymentRequest request) {
-        if (request.getMoney() > transactionLimit){
+        if (request.money() > transactionLimit){
             return "Сумма транзакции больше лимита суммы по операциям";
         }
         return null;
@@ -26,7 +26,7 @@ public class CorporateCard extends PaymentInstrument {
 
     @Override
     protected double calculateCommission(PaymentRequest request) {
-        return request.getMoney() * COMMISSION_FOR_CARD;
+        return request.money() * COMMISSION_FOR_CARD;
     }
 
     public int getTransactionLimit() {

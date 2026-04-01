@@ -30,5 +30,4 @@ public class Wallet extends PaymentInstrument {
     public int getFrozenAmount() {
         return frozenAmount;
     }
-
 }

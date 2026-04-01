@@ -2,12 +2,8 @@ package com.company.dto;
 
 import com.company.enums.PaymentCategory;
 
-public final class PaymentRequest {
-    private final double money;
-    private final PaymentCategory category;
-    private final String operationId;
-
-    public PaymentRequest(double money, PaymentCategory category, String operationId) {
+public record PaymentRequest(double money, PaymentCategory category, String operationId) {
+    public PaymentRequest {
         if (money <= 0) {
             throw new IllegalArgumentException("Сумма должна быть выше 0");
         }
@@ -17,21 +13,6 @@ public final class PaymentRequest {
         if (category == null) {
             throw new IllegalArgumentException("Вы не ввели категорию про транзакции");
         }
-        this.money = money;
-        this.category = category;
-        this.operationId = operationId;
-    }
-
-    public double getMoney() {
-        return money;
-    }
-
-    public PaymentCategory getCategory() {
-        return category;
-    }
-
-    public String getOperationId() {
-        return operationId;
     }
 
     @Override

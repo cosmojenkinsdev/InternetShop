@@ -20,7 +20,7 @@ public class OperationRecord {
         if (time == null) {
             throw new IllegalArgumentException("Время операции не должно быть null");
         }
-        if (money< 0) {
+        if (money < 0) {
             throw new IllegalArgumentException("Сумма операции не должна быть отрицательной");
         }
         if (category == null) {
@@ -38,30 +38,6 @@ public class OperationRecord {
         this.category = category;
         this.status = status;
         this.message = message;
-    }
-
-    public String getOperationId() {
-        return operationId;
-    }
-
-    public LocalDateTime getTime() {
-        return time;
-    }
-
-    public double getMoney() {
-        return money;
-    }
-
-    public PaymentCategory getCategory() {
-        return category;
-    }
-
-    public OperationStatus getStatus() {
-        return status;
-    }
-
-    public String getMessage() {
-        return message;
     }
 
     @Override

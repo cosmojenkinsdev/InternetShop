@@ -1,6 +1,4 @@
-package com.company.domain;
-
-import com.company.record.OperationRecord;
+package com.company.record;
 
 import java.util.ArrayList;
 import java.util.List;

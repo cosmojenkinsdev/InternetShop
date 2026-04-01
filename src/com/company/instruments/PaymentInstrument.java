@@ -8,17 +8,14 @@ import com.company.person.Owner;
 import com.company.record.OperationRecord;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
-import static com.company.domain.OperationJournal.addRecord;
+import static com.company.record.OperationJournal.addRecord;
 
 public abstract class PaymentInstrument {
     private final String id;
     private final Owner owner;
     private InstrumentStatus status;
     private double balance;
-    //private static final List<OperationRecord> operationRecords = new ArrayList<>();
 
     public PaymentInstrument(String id, Owner owner, InstrumentStatus status, int balance) {
         if (id == null || id.isBlank()) {
@@ -48,14 +45,14 @@ public abstract class PaymentInstrument {
             PaymentResult result = new PaymentResult(
                     OperationStatus.REJECTED,
                     message,
-                    request.getMoney(),
+                    request.money(),
                     0,
                     0);
             OperationRecord record = new OperationRecord(
-                    request.getOperationId(),
+                    request.operationId(),
                     LocalDateTime.now(),
-                    request.getMoney(),
-                    request.getCategory(),
+                    request.money(),
+                    request.category(),
                     OperationStatus.REJECTED,
                     message);
             addRecord(record);
@@ -66,36 +63,36 @@ public abstract class PaymentInstrument {
             PaymentResult result = new PaymentResult(
                     OperationStatus.REJECTED,
                     validatePaymentMessage,
-                    request.getMoney(),
+                    request.money(),
                     0,
                     0);
             OperationRecord record = new OperationRecord(
-                    request.getOperationId(),
+                    request.operationId(),
                     LocalDateTime.now(),
-                    request.getMoney(),
-                    request.getCategory(),
+                    request.money(),
+                    request.category(),
                     OperationStatus.REJECTED,
                     validatePaymentMessage);
             addRecord(record);
             return result;
         }
-        double totalWithdrawnAmount = calculateCommission(request) + request.getMoney();
+        double totalWithdrawnAmount = calculateCommission(request) + request.money();
         if (getAvailableBalance() < totalWithdrawnAmount) {
             String message = "На балансе недостаточно денег";
             PaymentResult result = new PaymentResult(
                     OperationStatus.REJECTED,
                     message,
-                    request.getMoney(),
+                    request.money(),
                     calculateCommission(request),
                     0);
             OperationRecord record = new OperationRecord(
-                    request.getOperationId(),
+                    request.operationId(),
                     LocalDateTime.now(),
-                    request.getMoney(),
-                    request.getCategory(),
+                    request.money(),
+                    request.category(),
                     OperationStatus.REJECTED,
                     message);
-                    addRecord(record);
+            addRecord(record);
             return result;
         }
         decreasedBalance(totalWithdrawnAmount);
@@ -103,14 +100,14 @@ public abstract class PaymentInstrument {
         PaymentResult result = new PaymentResult(
                 OperationStatus.SUCCESS,
                 message,
-                request.getMoney(),
+                request.money(),
                 calculateCommission(request),
                 totalWithdrawnAmount);
         OperationRecord record = new OperationRecord(
-                request.getOperationId(),
+                request.operationId(),
                 LocalDateTime.now(),
-                request.getMoney(),
-                request.getCategory(),
+                request.money(),
+                request.category(),
                 OperationStatus.SUCCESS,
                 message);
         addRecord(record);
@@ -138,14 +135,6 @@ public abstract class PaymentInstrument {
         balance -= amount;
     }
 
-
-    /*protected void addOperationRecord(OperationRecord record) {
-        if (record == null) {
-            throw new IllegalArgumentException("Запись не должна быть null");
-        }
-        operationRecords.add(record);
-    }*/
-
     public String getId() {
         return id;
     }
@@ -168,8 +157,4 @@ public abstract class PaymentInstrument {
     public double getBalance() {
         return balance;
     }
-
-    /*public static List<OperationRecord> getOperationRecords() {
-        return List.copyOf(operationRecords);
-    }*/
 }
