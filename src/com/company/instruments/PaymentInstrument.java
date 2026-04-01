@@ -78,7 +78,7 @@ public abstract class PaymentInstrument {
             return result;
         }
         double totalWithdrawnAmount = calculateCommission(request) + request.getMoney();
-        if (getAvailableBalance() < totalWithdrawnAmount){
+        if (getAvailableBalance() < totalWithdrawnAmount) {
             String message = "На балансе недостаточно денег";
             PaymentResult result = new PaymentResult(
                     OperationStatus.REJECTED,
@@ -117,6 +117,7 @@ public abstract class PaymentInstrument {
 
     /**
      * валидация конкретного инструмента, может ли конкретный тип инструмента провести именно этот платеж по своим собственным правилам.
+     *
      * @param request
      * @return null / message (причина отказа)
      */
