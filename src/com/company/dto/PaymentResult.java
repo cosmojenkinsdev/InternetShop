@@ -51,4 +51,14 @@ public final class PaymentResult {
     public double getWithdrawnMoney() {
         return withdrawnMoney;
     }
+
+    @Override
+    public String toString() {
+        return "Результат оплаты: " +
+                "Статус=" + getStatus() +
+                ", Причина='" + getMessage() + '\'' +
+                ", Запрошено=" + getRequestedMoney() + " руб" +
+                ", Комиссия=" + getCommission() + " руб" +
+                ", Списано=" + getWithdrawnMoney() + " руб";
+    }
 }

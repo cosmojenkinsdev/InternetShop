@@ -63,4 +63,16 @@ public class OperationRecord {
     public String getMessage() {
         return message;
     }
+
+    @Override
+    public String toString() {
+        return "OperationRecord{" +
+                "operationId='" + operationId + '\'' +
+                ", time=" + time +
+                ", money=" + money +
+                ", category=" + category +
+                ", status=" + status +
+                ", message='" + message + '\'' +
+                '}';
+    }
 }

@@ -33,4 +33,13 @@ public final class PaymentRequest {
     public String getOperationId() {
         return operationId;
     }
+
+    @Override
+    public String toString() {
+        return "PaymentRequest{" +
+                "money=" + money +
+                ", category=" + category +
+                ", operationId='" + operationId + '\'' +
+                '}';
+    }
 }

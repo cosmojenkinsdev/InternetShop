@@ -16,7 +16,7 @@ public class BonusAccount extends PaymentInstrument {
 
     @Override
     protected String validatePayment(PaymentRequest request) {
-        if (badCategories.contains(request.getCategory())){
+        if (badCategories.contains(request.getCategory())) {
             return "Эта категория недоступна для оплаты бонусным счетом";
         }
         return null;
