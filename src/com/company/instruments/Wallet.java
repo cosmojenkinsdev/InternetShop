@@ -6,9 +6,10 @@ import com.company.person.Owner;
 
 public class Wallet extends PaymentInstrument {
     private int frozenAmount;
+    private static int counter = 1;
 
     public Wallet(String id, Owner owner, InstrumentStatus status, int balance, int frozenAmount) {
-        super(id, owner, status, balance);
+        super("WLT-" + counter++, owner, status, balance);
 
     }
 

@@ -45,14 +45,15 @@ public abstract class PaymentInstrument {
             PaymentResult result = new PaymentResult(
                     OperationStatus.REJECTED,
                     message,
-                    request.money(),
+                    request.getMoney(),
                     0,
                     0);
             OperationRecord record = new OperationRecord(
-                    request.operationId(),
+                    request.getOperationId(),
                     LocalDateTime.now(),
-                    request.money(),
-                    request.category(),
+                    getOwner(),
+                    request.getMoney(),
+                    request.getCategory(),
                     OperationStatus.REJECTED,
                     message);
             addRecord(record);
@@ -63,33 +64,35 @@ public abstract class PaymentInstrument {
             PaymentResult result = new PaymentResult(
                     OperationStatus.REJECTED,
                     validatePaymentMessage,
-                    request.money(),
+                    request.getMoney(),
                     0,
                     0);
             OperationRecord record = new OperationRecord(
-                    request.operationId(),
+                    request.getOperationId(),
                     LocalDateTime.now(),
-                    request.money(),
-                    request.category(),
+                    getOwner(),
+                    request.getMoney(),
+                    request.getCategory(),
                     OperationStatus.REJECTED,
                     validatePaymentMessage);
             addRecord(record);
             return result;
         }
-        double totalWithdrawnAmount = calculateCommission(request) + request.money();
+        double totalWithdrawnAmount = calculateCommission(request) + request.getMoney();
         if (getAvailableBalance() < totalWithdrawnAmount) {
             String message = "На балансе недостаточно денег";
             PaymentResult result = new PaymentResult(
                     OperationStatus.REJECTED,
                     message,
-                    request.money(),
+                    request.getMoney(),
                     calculateCommission(request),
                     0);
             OperationRecord record = new OperationRecord(
-                    request.operationId(),
+                    request.getOperationId(),
                     LocalDateTime.now(),
-                    request.money(),
-                    request.category(),
+                    getOwner(),
+                    request.getMoney(),
+                    request.getCategory(),
                     OperationStatus.REJECTED,
                     message);
             addRecord(record);
@@ -100,14 +103,15 @@ public abstract class PaymentInstrument {
         PaymentResult result = new PaymentResult(
                 OperationStatus.SUCCESS,
                 message,
-                request.money(),
+                request.getMoney(),
                 calculateCommission(request),
                 totalWithdrawnAmount);
         OperationRecord record = new OperationRecord(
-                request.operationId(),
+                request.getOperationId(),
                 LocalDateTime.now(),
-                request.money(),
-                request.category(),
+                getOwner(),
+                request.getMoney(),
+                request.getCategory(),
                 OperationStatus.SUCCESS,
                 message);
         addRecord(record);
@@ -157,4 +161,6 @@ public abstract class PaymentInstrument {
     public double getBalance() {
         return balance;
     }
+
+
 }

@@ -2,6 +2,7 @@ package com.company.record;
 
 import com.company.enums.OperationStatus;
 import com.company.enums.PaymentCategory;
+import com.company.person.Owner;
 
 import java.time.LocalDateTime;
 
@@ -12,8 +13,9 @@ public class OperationRecord {
     private final PaymentCategory category;
     private final OperationStatus status;
     private final String message;
+    private final Owner owner;
 
-    public OperationRecord(String operationId, LocalDateTime time, double money, PaymentCategory category, OperationStatus status, String message) {
+    public OperationRecord(String operationId, LocalDateTime time, Owner owner, double money, PaymentCategory category, OperationStatus status, String message) {
         if (operationId == null || operationId.isBlank()) {
             throw new IllegalArgumentException("Operation id не должен быть пустым");
         }
@@ -34,6 +36,7 @@ public class OperationRecord {
         }
         this.operationId = operationId;
         this.time = time;
+        this.owner = owner;
         this.money = money;
         this.category = category;
         this.status = status;
@@ -45,6 +48,7 @@ public class OperationRecord {
         return "OperationRecord{" +
                 "operationId='" + operationId + '\'' +
                 ", time=" + time +
+                ", owner=" + owner +
                 ", money=" + money +
                 ", category=" + category +
                 ", status=" + status +
