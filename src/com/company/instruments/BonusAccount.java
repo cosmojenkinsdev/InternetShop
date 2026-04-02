@@ -8,15 +8,16 @@ import com.company.person.Owner;
 import java.util.List;
 
 public class BonusAccount extends PaymentInstrument {
+    private static int counter = 1;
     private static final List<PaymentCategory> badCategories = List.of(PaymentCategory.ADS, PaymentCategory.TAXI);
 
     public BonusAccount(String id, Owner owner, InstrumentStatus status, int balance) {
-        super(id, owner, status, balance);
+        super("BA-" + counter, owner, status, balance);
     }
 
     @Override
     protected String validatePayment(PaymentRequest request) {
-        if (badCategories.contains(request.category())) {
+        if (badCategories.contains(request.getCategory())) {
             return "Эта категория недоступна для оплаты бонусным счетом";
         }
         return null;

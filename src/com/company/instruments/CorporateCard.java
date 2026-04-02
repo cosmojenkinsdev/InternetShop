@@ -7,9 +7,10 @@ import com.company.person.Owner;
 public class CorporateCard extends PaymentInstrument {
     private final int transactionLimit;
     private static final double COMMISSION_FOR_CARD = 0.02;
+    private static int counter = 1;
 
     public CorporateCard(String id, Owner owner, InstrumentStatus status, int balance, int transactionLimit) {
-        super(id, owner, status, balance);
+        super("CARD-" + counter++, owner, status, balance);
         if (transactionLimit <= 0) {
             throw new IllegalArgumentException("Лимит одной операции должен быть больше 0");
         }
@@ -18,7 +19,7 @@ public class CorporateCard extends PaymentInstrument {
 
     @Override
     protected String validatePayment(PaymentRequest request) {
-        if (request.money() > transactionLimit){
+        if (request.getMoney() > transactionLimit){
             return "Сумма транзакции больше лимита суммы по операциям";
         }
         return null;
@@ -26,7 +27,7 @@ public class CorporateCard extends PaymentInstrument {
 
     @Override
     protected double calculateCommission(PaymentRequest request) {
-        return request.money() * COMMISSION_FOR_CARD;
+        return request.getMoney() * COMMISSION_FOR_CARD;
     }
 
     public int getTransactionLimit() {

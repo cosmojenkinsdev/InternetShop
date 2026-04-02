@@ -3,16 +3,14 @@ package com.company.person;
 public final class Owner {
     private final String name;
     private final String id;
+    private static int counter = 1;
 
-    public Owner(String name, String id) {
+    public Owner(String name) {
         if (name == null || name.isBlank()) {
             throw new IllegalArgumentException("Владелец должен иметь валидное поля имени!");
         }
-        if (id == null || id.isBlank()) {
-            throw new IllegalArgumentException("Владелец должен иметь валидное поля id!");
-        }
         this.name = name;
-        this.id = id;
+        this.id = "OWNER-" + counter++;
     }
 
     public String getName() {
@@ -21,5 +19,11 @@ public final class Owner {
 
     public String getId() {
         return id;
+    }
+
+    @Override
+    public String toString() {
+        return name + '\'' +
+                ", id владельца='" + id + '\'';
     }
 }
