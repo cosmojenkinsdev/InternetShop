@@ -6,7 +6,8 @@ import java.util.List;
 public final class OperationJournal {
     private static final List<OperationRecord> records = new ArrayList<>();
 
-    private OperationJournal(){};
+    private OperationJournal() {
+    }
 
     public static void addRecord(OperationRecord record) {
         if (record == null) {

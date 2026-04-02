@@ -13,7 +13,6 @@ import static com.company.person.OwnerRegistry.getOrCreateOwner;
 
 public class Main {
     public static void main(String[] args) {
-
         Owner owner = getOrCreateOwner("CL-100", "Vadim Ivanovich");
         CorporateCard card = new CorporateCard("023", owner, InstrumentStatus.ACTIVE, 1000, 5000);
         System.out.println(card.pay(new PaymentRequest(500.0, PaymentCategory.FOOD)));

@@ -161,6 +161,4 @@ public abstract class PaymentInstrument {
     public double getBalance() {
         return balance;
     }
-
-
 }
