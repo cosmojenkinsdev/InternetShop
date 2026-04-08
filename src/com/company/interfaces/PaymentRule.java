@@ -5,5 +5,5 @@ import com.company.instruments.PaymentInstrument;
 
 @FunctionalInterface
 public interface PaymentRule {
-    String validate(PaymentInstrument instrument, PaymentRequest request);
+    String validate(PaymentRequest request);
 }

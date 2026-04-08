@@ -8,19 +8,15 @@ import java.util.List;
 
 public class PaymentRuleRegistry {
     private static final List<PaymentRule> tempRules = List.of(
-            new PaymentRule() {
-                @Override
-                public String validate(PaymentInstrument instrument, PaymentRequest request) {
-                    String message = "Лимит на оплату рекламы до 3000 руб";
-                    if (request.getCategory() == PaymentCategory.ADS && request.getMoney() > 3000) {
-                        return message;
-                    }
-                    return null;
+            ((request) -> {
+                if (request.getCategory() == PaymentCategory.ADS && request.getMoney() > 3000) {
+                    return "Лимит на оплату рекламы до 3000 руб";
                 }
+                return null;
             }
-    );
+            ));
 
-    public List<PaymentRule> getPaymentRules() {
+    public static List<PaymentRule> getPaymentRules() {
         return tempRules;
     }
 }
