@@ -44,6 +44,7 @@ public abstract class PaymentInstrument {
         }
         if (getStatus() != InstrumentStatus.ACTIVE) {
             String message = "Статус инструмента не активен";
+
             PaymentResult result = new PaymentResult(
                     OperationStatus.REJECTED,
                     message,
@@ -62,7 +63,8 @@ public abstract class PaymentInstrument {
             return result;
         }
         String tempRule = commonRules(request);
-        if (tempRule != null){
+
+        if (tempRule != null) {
             PaymentResult result = new PaymentResult(
                     OperationStatus.REJECTED,
                     tempRule,
@@ -80,6 +82,7 @@ public abstract class PaymentInstrument {
             addRecord(record);
             return result;
         }
+
         String validatePaymentMessage = validatePayment(request);
         if (validatePaymentMessage != null) {
             PaymentResult result = new PaymentResult(
@@ -99,9 +102,12 @@ public abstract class PaymentInstrument {
             addRecord(record);
             return result;
         }
+
         double totalWithdrawnAmount = calculateCommission(request) + request.getMoney();
+
         if (getAvailableBalance() < totalWithdrawnAmount) {
             String message = "На балансе недостаточно денег";
+
             PaymentResult result = new PaymentResult(
                     OperationStatus.REJECTED,
                     message,
@@ -120,7 +126,9 @@ public abstract class PaymentInstrument {
             return result;
         }
         decreasedBalance(totalWithdrawnAmount);
+
         String message = "Оплата успешно прошла";
+
         PaymentResult result = new PaymentResult(
                 OperationStatus.SUCCESS,
                 message,
@@ -147,16 +155,34 @@ public abstract class PaymentInstrument {
      */
     protected abstract String validatePayment(PaymentRequest request);
 
+    /**
+     * Вычисление коммиссии
+     *
+     * @param request
+     * @return commission
+     */
     protected abstract double calculateCommission(PaymentRequest request);
 
+    /**
+     * Получение настоящего баланса, если, допустим, денежные средства заморожены
+     *
+     * @return
+     */
     protected double getAvailableBalance() {
         return balance;
     }
 
-    protected String commonRules(PaymentRequest request){
-        for(PaymentRule rule : PaymentRuleRegistry.getPaymentRules()){
+    /**
+     * Временное ограничение для того, чтобы попрактиковаться с анон-классами, лямбдами
+     * Нельзя платить за рекламу >3000
+     *
+     * @param request
+     * @return
+     */
+    protected String commonRules(PaymentRequest request) {
+        for (PaymentRule rule : PaymentRuleRegistry.getPaymentRules()) {
             String validate = rule.validate(request);
-            if ( validate != null){
+            if (validate != null) {
                 return "Это временное ограничение. Нельзя тратить на рекламу выше 3000";
             }
         }
