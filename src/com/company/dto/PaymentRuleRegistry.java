@@ -7,14 +7,23 @@ import com.company.interfaces.PaymentRule;
 import java.util.List;
 
 public class PaymentRuleRegistry {
+    private PaymentRuleRegistry() {
+    }
+
     private static final List<PaymentRule> tempRules = List.of(
             ((request) -> {
                 if (request.getCategory() == PaymentCategory.ADS && request.getMoney() > 3000) {
                     return "Лимит на оплату рекламы до 3000 руб";
                 }
                 return null;
-            }
-            ));
+            }),
+            (request -> {
+                if (request.getMoney() > 10000) {
+                    return "Лимит на транзакцию не более 1000";
+                }
+                return null;
+            })
+            );
 
     public static List<PaymentRule> getPaymentRules() {
         return tempRules;
