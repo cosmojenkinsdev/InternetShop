@@ -14,6 +14,7 @@ import static com.company.person.OwnerRegistry.getOrCreateOwner;
 public class Main {
     public static void main(String[] args) {
         Owner owner = getOrCreateOwner("CL-100", "Vadim Ivanovich");
+/*
         CorporateCard card = new CorporateCard("023", owner, InstrumentStatus.ACTIVE, 1000, 5000);
         System.out.println(card.pay(new PaymentRequest(500.0, PaymentCategory.FOOD)));
 
@@ -22,11 +23,12 @@ public class Main {
 
         BonusAccount bonusAccount = new BonusAccount("023", OwnerRegistry.getOrCreateOwner("CL-101", "Fedor Ivanovich"), InstrumentStatus.ACTIVE, 1000);
         System.out.println(bonusAccount.getOwner().getName() + " " + bonusAccount.pay(new PaymentRequest(500.0, PaymentCategory.ADS)));
+*/
 
         Owner owner1 = OwnerRegistry.getOrCreateOwner("CL-102", "Inokentiy Smoktunovskiy");
-        BonusAccount bonusAccount2 = new BonusAccount("023", owner1, InstrumentStatus.ACTIVE, 1000);
-        System.out.println(bonusAccount2.getOwner().getName() + " " + bonusAccount2.pay(new PaymentRequest(500.0, PaymentCategory.ADS)));
+        BonusAccount bonusAccount2 = new BonusAccount("023", owner1, InstrumentStatus.ACTIVE, 10000);
+        System.out.println(bonusAccount2.getOwner().getName() + " " + bonusAccount2.pay(new PaymentRequest(3500.0, PaymentCategory.ADS)));
 
-        printHistory();
+        //printHistory();
     }
 }

@@ -2,8 +2,10 @@ package com.company.instruments;
 
 import com.company.dto.PaymentRequest;
 import com.company.dto.PaymentResult;
+import com.company.dto.PaymentRuleRegistry;
 import com.company.enums.InstrumentStatus;
 import com.company.enums.OperationStatus;
+import com.company.interfaces.PaymentRule;
 import com.company.person.Owner;
 import com.company.record.OperationRecord;
 
@@ -56,6 +58,25 @@ public abstract class PaymentInstrument {
                     request.getCategory(),
                     OperationStatus.REJECTED,
                     message);
+            addRecord(record);
+            return result;
+        }
+        String tempRule = commonRules(request);
+        if (tempRule != null){
+            PaymentResult result = new PaymentResult(
+                    OperationStatus.REJECTED,
+                    tempRule,
+                    request.getMoney(),
+                    0,
+                    0);
+            OperationRecord record = new OperationRecord(
+                    request.getOperationId(),
+                    LocalDateTime.now(),
+                    getOwner(),
+                    request.getMoney(),
+                    request.getCategory(),
+                    OperationStatus.REJECTED,
+                    tempRule);
             addRecord(record);
             return result;
         }
@@ -130,6 +151,16 @@ public abstract class PaymentInstrument {
 
     protected double getAvailableBalance() {
         return balance;
+    }
+
+    protected String commonRules(PaymentRequest request){
+        for(PaymentRule rule : PaymentRuleRegistry.getPaymentRules()){
+            String validate = rule.validate(request);
+            if ( validate != null){
+                return "Это временное ограничение. Нельзя тратить на рекламу выше 3000";
+            }
+        }
+        return null;
     }
 
     protected void decreasedBalance(double amount) {
